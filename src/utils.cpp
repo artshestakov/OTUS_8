@@ -38,3 +38,13 @@ std::string utils::MD5(const std::string& s)
     return result;
 }
 //-----------------------------------------------------------------------------
+utils::TimePoint utils::GetTick()
+{
+    return std::chrono::steady_clock::now();
+}
+//-----------------------------------------------------------------------------
+uint64_t utils::GetTickDiff(const utils::TimePoint& p)
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(utils::GetTick() - p).count();
+}
+//-----------------------------------------------------------------------------

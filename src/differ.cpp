@@ -1,6 +1,7 @@
 #include "differ.h"
 #include "utils.h"
 #include <fstream>
+#include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
 //-----------------------------------------------------------------------------
@@ -42,12 +43,17 @@ bool Differ::Init()
 //-----------------------------------------------------------------------------
 bool Differ::Run()
 {
-    std::vector<std::string> files = utils::DirFiles(m_DirPath);
+    auto t = utils::GetTick();
+    std::vector<std::string> files = utils::DirFiles(m_DirPath, true);
+    uint64_t read_dir_ms = utils::GetTickDiff(t);
+
     if (files.size() < 2)
     {
         m_ErrorString = "The directory \"" + m_DirPath + "\" has less than two files";
         return false;
     }
+
+    t = utils::GetTick();
 
     for (auto file_left = files.begin(); file_left != files.end(); ++file_left)
     {
@@ -80,6 +86,13 @@ bool Differ::Run()
             }
         }
     }
+
+    uint64_t process_ms = utils::GetTickDiff(t);
+
+    PrintResult();
+
+    std::cout << "Read the directory time: " << read_dir_ms << " msec" << std::endl;
+    std::cout << "Diff process time:       " << process_ms << " msec" << std::endl;
 
     return true;
 }
@@ -135,6 +148,19 @@ void Differ::InsertToMap(const std::string& file_left, const std::string& file_r
     if (!already_exists)
     {
         m_MapSimilar[file_left].emplace_back(file_right);
+    }
+}
+//-----------------------------------------------------------------------------
+void Differ::PrintResult()
+{
+    for (const auto& map_item : m_MapSimilar)
+    {
+        std::cout << map_item.first << std::endl;
+        for (const std::string& file_path : map_item.second)
+        {
+            std::cout << "  " << file_path << std::endl;
+        }
+        std::cout << std::endl;
     }
 }
 //-----------------------------------------------------------------------------

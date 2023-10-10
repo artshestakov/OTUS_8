@@ -35,6 +35,9 @@ private:
     //! \param file_right путь к файлу, который идентичен с файлом 1
     void InsertToMap(const std::string& file_left, const std::string& file_right);
 
+    //! Вывод результатов на консоль
+    void PrintResult();
+
 private:
     std::string m_ErrorString;
     std::string m_DirPath;
