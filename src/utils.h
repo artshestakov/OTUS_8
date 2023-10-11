@@ -12,7 +12,8 @@ namespace utils
     //! \param dir_path путь к директории
     //! \param is_recursive указывает, использовать ли рекурсивный обход директории
     //! \return возвращает список путей к файлам
-    std::vector<std::string> DirFiles(const std::string& dir_path, const std::vector<std::string> &exclude_dir_list, bool is_recursive = false);
+    std::vector<std::string> DirFiles(const std::string& dir_path, const std::vector<std::string> &exclude_dir_list,
+        const std::vector<std::string>& mask_list, bool is_recursive = false);
 
     //! ¬ычислить хэш строки
     //! \param s строка
@@ -27,6 +28,10 @@ namespace utils
     //! \param p момент времени
     //! \return возвращает разницу между указанным моментом времени и текущим
     uint64_t GetTickDiff(const TimePoint& p);
+
+    //! ѕриведение строки к нижнему регистру
+    //! \param s строка
+    void StringToLower(std::string& s);
 
     //! ѕроверить наличие значени€ в векторе
     //! \param v вектор

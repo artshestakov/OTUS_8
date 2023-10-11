@@ -5,10 +5,13 @@
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
 //-----------------------------------------------------------------------------
-Differ::Differ(const std::vector<std::string>& dir_path_list, const std::vector<std::string>& exclude_dir_list,
+Differ::Differ(const std::vector<std::string>& dir_path_list,
+    const std::vector<std::string>& exclude_dir_list,
+    const std::vector<std::string>& mask_list,
     bool is_recursive, unsigned int minimum_size, uint64_t chunk_size)
     : m_DirPathList(dir_path_list),
     m_ExcludeDirList(exclude_dir_list),
+    m_MaskList(mask_list),
     m_IsRecursive(is_recursive),
     m_MinimumSize(minimum_size),
     m_ChunkSize(chunk_size)
@@ -44,6 +47,12 @@ bool Differ::Init()
         }
     }
 
+    //Приводим маски к нижнему регистру для упрощения работы в дальнейшем
+    for (std::string& s : m_MaskList)
+    {
+        utils::StringToLower(s);
+    }
+
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -53,7 +62,7 @@ bool Differ::Run()
     std::vector<std::string> files;
     for (const std::string& dir_path : m_DirPathList)
     {
-        auto f = utils::DirFiles(dir_path, m_ExcludeDirList, m_IsRecursive);
+        auto f = utils::DirFiles(dir_path, m_ExcludeDirList, m_MaskList, m_IsRecursive);
         files.insert(files.end(), f.begin(), f.end());
     }
 

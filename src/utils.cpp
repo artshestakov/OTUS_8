@@ -4,17 +4,24 @@
 #include <boost/uuid/detail/md5.hpp>
 #include <boost/algorithm/hex.hpp>
 //-----------------------------------------------------------------------------
-std::vector<std::string> utils::DirFiles(const std::string& dir_path, const std::vector<std::string>& exclude_dir_list, bool is_recursive)
+std::vector<std::string> utils::DirFiles(const std::string& dir_path, const std::vector<std::string>& exclude_dir_list,
+    const std::vector<std::string>& mask_list, bool is_recursive)
 {
     std::vector<std::string> v;
-    auto read_directory = [&v, &exclude_dir_list](auto iterator_type)
+    auto read_directory = [&v, &exclude_dir_list, &mask_list](auto iterator_type)
     {
         for (const auto& f : boost::make_iterator_range(iterator_type, { }))
         {
             auto f_path = f.path();
             if (!is_directory(f) && !VectorContains(exclude_dir_list, f_path.parent_path().string()))
             {
-                v.emplace_back(f_path.string());
+                std::string file_name = f_path.stem().string();
+                StringToLower(file_name);
+
+                if (mask_list.empty() ? true : VectorContains(mask_list, file_name))
+                {
+                    v.emplace_back(f_path.string());
+                }
             }
         }
     };
@@ -47,5 +54,13 @@ utils::TimePoint utils::GetTick()
 uint64_t utils::GetTickDiff(const utils::TimePoint& p)
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>(utils::GetTick() - p).count();
+}
+//-----------------------------------------------------------------------------
+void utils::StringToLower(std::string& s)
+{
+    for (size_t i = 0, c = s.size(); i < c; ++i)
+    {
+        s[i] = std::move((char)std::tolower((int)s[i]));
+    }
 }
 //-----------------------------------------------------------------------------
