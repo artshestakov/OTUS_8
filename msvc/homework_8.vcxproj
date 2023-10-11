@@ -134,7 +134,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Boost\boost_1_82_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_program_options-vc142-mt-gd-x32-1_82.lib</AdditionalDependencies>
+      <AdditionalDependencies>libboost_program_options-vc142-mt-x32-1_82.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -151,7 +151,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Boost\boost_1_82_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_program_options-vc142-mt-gd-x32-1_82.lib</AdditionalDependencies>
+      <AdditionalDependencies>libboost_program_options-vc142-mt-gd-x64-1_82.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,7 +172,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Boost\boost_1_82_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_program_options-vc142-mt-gd-x32-1_82.lib</AdditionalDependencies>
+      <AdditionalDependencies>libboost_program_options-vc142-mt-x64-1_82.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

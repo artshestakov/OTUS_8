@@ -12,7 +12,7 @@ namespace utils
     //! \param dir_path путь к директории
     //! \param is_recursive указывает, использовать ли рекурсивный обход директории
     //! \return возвращает список путей к файлам
-    std::vector<std::string> DirFiles(const std::string& dir_path, const std::vector<std::string> &exclude_dir_list,
+    std::vector<std::string> DirFiles(const std::string& dir_path, const std::vector<std::string>& exclude_dir_list,
         const std::vector<std::string>& mask_list, bool is_recursive = false);
 
     //! Вычислить хэш строки

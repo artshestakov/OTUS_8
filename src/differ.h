@@ -8,7 +8,7 @@ class Differ
 {
 public:
     Differ(const std::vector<std::string>& dir_path_list,
-        const std::vector<std::string> &exclude_dir_list,
+        const std::vector<std::string>& exclude_dir_list,
         const std::vector<std::string>& mask_list,
         bool is_recursive, unsigned int minimum_size, uint64_t chunk_size);
     ~Differ();
