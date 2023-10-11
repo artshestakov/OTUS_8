@@ -7,8 +7,8 @@
 //-----------------------------------------------------------------------------
 constexpr int BUFFER_CHUNK = 5;
 //-----------------------------------------------------------------------------
-Differ::Differ(const std::string& dir_path)
-    : m_DirPath(dir_path)
+Differ::Differ(const std::vector<std::string>& dir_path_list)
+    : m_DirPathList(dir_path_list)
 {
 
 }
@@ -25,17 +25,20 @@ const std::string& Differ::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool Differ::Init()
 {
-    if (m_DirPath.empty())
+    if (m_DirPathList.empty())
     {
-        m_ErrorString = "The path is empty";
+        m_ErrorString = "The list of path is empty";
         return false;
     }
 
-    //ѕроверим, что указанный путь это путь к директории
-    if (!boost::filesystem::is_directory(m_DirPath))
+    //ѕроверим, что указанные пути это путь к директории
+    for (const std::string& dir_path : m_DirPathList)
     {
-        m_ErrorString = "The path \"" + m_DirPath + "\" is not a directory";
-        return false;
+        if (!boost::filesystem::is_directory(dir_path))
+        {
+            m_ErrorString = "The path \"" + dir_path + "\" is not a directory";
+            return false;
+        }
     }
 
     return true;
@@ -44,14 +47,19 @@ bool Differ::Init()
 bool Differ::Run()
 {
     auto t = utils::GetTick();
-    std::vector<std::string> files = utils::DirFiles(m_DirPath, true);
-    uint64_t read_dir_ms = utils::GetTickDiff(t);
-
-    if (files.size() < 2)
+    std::vector<std::string> files;
+    for (const std::string& dir_path : m_DirPathList)
     {
-        m_ErrorString = "The directory \"" + m_DirPath + "\" has less than two files";
+        auto f = utils::DirFiles(dir_path);
+        files.insert(files.end(), f.begin(), f.end());
+    }
+
+    if (auto s = files.size(); s < 2)
+    {
+        m_ErrorString = "In total your directories has less than two files (" + std::to_string(s);
         return false;
     }
+    uint64_t read_dir_ms = utils::GetTickDiff(t);
 
     t = utils::GetTick();
 

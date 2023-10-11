@@ -7,7 +7,7 @@
 class Differ
 {
 public:
-    Differ(const std::string& dir_path);
+    Differ(const std::vector<std::string>& dir_path_list);
     ~Differ();
 
     //! Получить текстовое описание последней ошибки
@@ -40,7 +40,7 @@ private:
 
 private:
     std::string m_ErrorString;
-    std::string m_DirPath;
+    std::vector<std::string> m_DirPathList;
     std::map<std::string, std::vector<std::string>> m_MapSimilar;
 };
 //-----------------------------------------------------------------------------
