@@ -4,16 +4,17 @@
 #include <boost/uuid/detail/md5.hpp>
 #include <boost/algorithm/hex.hpp>
 //-----------------------------------------------------------------------------
-std::vector<std::string> utils::DirFiles(const std::string& dir_path, bool is_recursive)
+std::vector<std::string> utils::DirFiles(const std::string& dir_path, const std::vector<std::string>& exclude_dir_list, bool is_recursive)
 {
     std::vector<std::string> v;
-    auto read_directory = [&v](auto iterator_type)
+    auto read_directory = [&v, &exclude_dir_list](auto iterator_type)
     {
         for (const auto& f : boost::make_iterator_range(iterator_type, { }))
         {
-            if (!is_directory(f))
+            auto f_path = f.path();
+            if (!is_directory(f) && !VectorContains(exclude_dir_list, f_path.parent_path().string()))
             {
-                v.emplace_back(f.path().string());
+                v.emplace_back(f_path.string());
             }
         }
     };
