@@ -7,7 +7,7 @@
 class Differ
 {
 public:
-    Differ(const std::vector<std::string>& dir_path_list);
+    Differ(const std::vector<std::string>& dir_path_list, bool is_recursive);
     ~Differ();
 
     //! Получить текстовое описание последней ошибки
@@ -41,6 +41,7 @@ private:
 private:
     std::string m_ErrorString;
     std::vector<std::string> m_DirPathList;
+    bool m_IsRecursive;
     std::map<std::string, std::vector<std::string>> m_MapSimilar;
 };
 //-----------------------------------------------------------------------------

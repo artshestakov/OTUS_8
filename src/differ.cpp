@@ -7,8 +7,9 @@
 //-----------------------------------------------------------------------------
 constexpr int BUFFER_CHUNK = 5;
 //-----------------------------------------------------------------------------
-Differ::Differ(const std::vector<std::string>& dir_path_list)
-    : m_DirPathList(dir_path_list)
+Differ::Differ(const std::vector<std::string>& dir_path_list, bool is_recursive)
+    : m_DirPathList(dir_path_list),
+    m_IsRecursive(is_recursive)
 {
 
 }
@@ -50,7 +51,7 @@ bool Differ::Run()
     std::vector<std::string> files;
     for (const std::string& dir_path : m_DirPathList)
     {
-        auto f = utils::DirFiles(dir_path);
+        auto f = utils::DirFiles(dir_path, m_IsRecursive);
         files.insert(files.end(), f.begin(), f.end());
     }
 
