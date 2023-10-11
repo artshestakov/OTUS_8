@@ -5,12 +5,11 @@
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
 //-----------------------------------------------------------------------------
-constexpr int BUFFER_CHUNK = 5;
-//-----------------------------------------------------------------------------
-Differ::Differ(const std::vector<std::string>& dir_path_list, bool is_recursive, unsigned int minimum_size)
+Differ::Differ(const std::vector<std::string>& dir_path_list, bool is_recursive, unsigned int minimum_size, uint64_t chunk_size)
     : m_DirPathList(dir_path_list),
     m_IsRecursive(is_recursive),
-    m_MinimumSize(minimum_size)
+    m_MinimumSize(minimum_size),
+    m_ChunkSize(chunk_size)
 {
 
 }
@@ -115,18 +114,18 @@ bool Differ::Diff(std::ifstream& file, const std::string& file_path_right, uint6
         throw std::runtime_error("Can't open file " + file_path_right);
     }
 
-    static char c1[BUFFER_CHUNK + 1] = { 0 };
-    static char c2[BUFFER_CHUNK + 1] = { 0 };
+    static std::string c1;
+    static std::string c2;
     uint64_t cnt = 0;
     bool result = false;
 
     while (size > 0)
     {
         //Вычисляем, сколько будем читать: указанный буфер или то, что осталось
-        cnt = size < BUFFER_CHUNK ? size : BUFFER_CHUNK;
+        cnt = size < m_ChunkSize ? size : m_ChunkSize;
 
-        file.read(c1, cnt);
-        file_right.read(c2, cnt);
+        file.read(&c1[0], cnt);
+        file_right.read(&c2[0], cnt);
         size -= cnt;
 
         //Если хэши разные - выходим
@@ -137,8 +136,8 @@ bool Differ::Diff(std::ifstream& file, const std::string& file_path_right, uint6
         }
     }
 
-    memset(c1, 0, BUFFER_CHUNK + 1);
-    memset(c2, 0, BUFFER_CHUNK + 1);
+    c1.clear();
+    c2.clear();
     return result;
 }
 //-----------------------------------------------------------------------------
