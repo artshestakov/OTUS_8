@@ -7,7 +7,7 @@
 class Differ
 {
 public:
-    Differ(const std::vector<std::string>& dir_path_list, bool is_recursive);
+    Differ(const std::vector<std::string>& dir_path_list, bool is_recursive, unsigned int minimum_size);
     ~Differ();
 
     //! Получить текстовое описание последней ошибки
@@ -42,6 +42,7 @@ private:
     std::string m_ErrorString;
     std::vector<std::string> m_DirPathList;
     bool m_IsRecursive;
+    unsigned int m_MinimumSize;
     std::map<std::string, std::vector<std::string>> m_MapSimilar;
 };
 //-----------------------------------------------------------------------------

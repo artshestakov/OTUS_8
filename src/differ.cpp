@@ -7,9 +7,10 @@
 //-----------------------------------------------------------------------------
 constexpr int BUFFER_CHUNK = 5;
 //-----------------------------------------------------------------------------
-Differ::Differ(const std::vector<std::string>& dir_path_list, bool is_recursive)
+Differ::Differ(const std::vector<std::string>& dir_path_list, bool is_recursive, unsigned int minimum_size)
     : m_DirPathList(dir_path_list),
-    m_IsRecursive(is_recursive)
+    m_IsRecursive(is_recursive),
+    m_MinimumSize(minimum_size)
 {
 
 }
@@ -68,7 +69,7 @@ bool Differ::Run()
     {
         //Не обращаем внимания на файлы меньше одного байта
         uint64_t file_left_size = boost::filesystem::file_size(*file_left);
-        if (file_left_size < 1)
+        if (file_left_size < m_MinimumSize)
         {
             continue;
         }
