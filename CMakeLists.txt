@@ -9,7 +9,7 @@ set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 set(BOOST_ALL_DYN_LINK OFF)
 
-find_package(Boost REQUIRED COMPONENTS libboost_program_options libboost_filesystem)
+find_package(Boost REQUIRED COMPONENTS program_options filesystem)
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIR})
