@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Installing Boost...
-      run: sudo apt-get update && sudo apt-get install -yq libboost-dev-all
+      run: sudo apt-get update && sudo apt install libboost-filesystem-dev
 
     - name: Prepare to compile
       run: cmake . -B build
