@@ -15,9 +15,6 @@ jobs:
 #    - name: Update packages...
 #      run: sudo apt update && sudo apt upgrade
 
-    - name: Test
-      run: echo "::set-env name=BOOST_ROOT::$BOOST_ROOT_1_72_0"
-
     - name: Installing Boost...
       run: sudo apt install -y libboost-dev libboost-filesystem-dev libboost-program-options-dev
 
