@@ -12,8 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Update packages...
+      run: sudo apt update && sudo apt upgrade
+
     - name: Installing Boost...
-      run: sudo apt update && sudo apt upgrade && sudo apt install libboost-dev-all
+      run: sudo apt install libboost-filesystem-dev && sudo apt install libboost-program-options-dev
 
     - name: Prepare to compile
       run: cmake . -B build
