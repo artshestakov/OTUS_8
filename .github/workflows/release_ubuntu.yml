@@ -12,6 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Installing Boost...
+      run: sudo apt-get update && sudo apt-get install -yq libboost1.65-dev
+
     - name: Prepare to compile
       run: cmake . -B build
 
