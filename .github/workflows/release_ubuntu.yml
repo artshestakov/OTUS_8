@@ -22,7 +22,7 @@ jobs:
       run: sudo apt install -y libboost-dev libboost-filesystem-dev libboost-program-options-dev
 
     - name: Prepare to compile
-      run: cmake . -B build -DBoost_INCLUDE_DIR=$BOOST_ROOT_1_72_0/include
+      run: cmake . -B build -DBoost_INCLUDE_DIR=/usr/include/boost
 
     - name: Compile
       run: cmake --build build --config Release
