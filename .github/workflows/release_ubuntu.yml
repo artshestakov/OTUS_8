@@ -12,6 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Check package
+      run: dpkg --listfiles libboost-program-options1.74-dev
+
+    - name: Find a:
+      run: sudo find / -name libboost_program_options.a
+
+    - name: Find so:
+      run: sudo find / -name libboost_program_options.so
+
     - name: Update packages...
       run: sudo apt update && sudo apt upgrade
 
