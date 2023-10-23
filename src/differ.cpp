@@ -125,8 +125,8 @@ bool Differ::Diff(std::ifstream& file, const std::string& file_path_right, uint6
         throw std::runtime_error("Can't open file " + file_path_right);
     }
 
-    static std::string c1;
-    static std::string c2;
+    std::string c1;
+    std::string c2;
     uint64_t cnt = 0;
     bool result = false;
 
@@ -147,8 +147,6 @@ bool Differ::Diff(std::ifstream& file, const std::string& file_path_right, uint6
         }
     }
 
-    c1.clear();
-    c2.clear();
     return result;
 }
 //-----------------------------------------------------------------------------

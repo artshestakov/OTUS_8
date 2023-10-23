@@ -12,8 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-#    - name: Update packages...
-#      run: sudo apt update && sudo apt upgrade
+    - name: Update packages...
+      run: sudo apt update && sudo apt upgrade
 
     - name: Installing Boost...
       run: sudo apt install -y libboost-dev libboost-filesystem-dev libboost-program-options-dev

@@ -39,14 +39,21 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    Differ d(var_map.at("dirs").as<std::vector<std::string>>(),
-        var_map.at("exclude").as<std::vector<std::string>>(),
-        var_map.at("mask").as<std::vector<std::string>>(),
-        is_recursive, minimum_size, chunk_size);
-    if (!d.Init() || !d.Run())
+    try
     {
-        std::cout << d.GetErrorString() << std::endl;
-        return EXIT_FAILURE;
+        Differ d(var_map.at("dirs").as<std::vector<std::string>>(),
+            var_map.at("exclude").as<std::vector<std::string>>(),
+            var_map.at("mask").as<std::vector<std::string>>(),
+            is_recursive, minimum_size, chunk_size);
+        if (!d.Init() || !d.Run())
+        {
+            std::cout << d.GetErrorString() << std::endl;
+            return EXIT_FAILURE;
+        }
+    }
+    catch (const std::runtime_error& e)
+    {
+        std::cout << e.what() << std::endl;
     }
 
     return EXIT_SUCCESS;
